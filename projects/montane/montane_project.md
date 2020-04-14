@@ -61,8 +61,21 @@ Occurrence data is filtered using multiple methods
   2. Aggregator Flags
     GBIF and iDigBio include flags within the data records indicating potential issues with the data.  Occurrence records that have the following flags are removed.
       a. GBIF
-        * 
+        * TAXON_MATCH_FUZZY
+        * TAXON_MATCH_HIGHERRANK
+        * TAXON_MATCH_NONE
       b. iDigBio
+        * geopoint_datum_missing
+        * geopoint_bounds
+        * geopoint_datum_error
+        * geopoint_similar_coord
+        * rev_geocode_mismatch
+        * rev_geocode_failure
+        * geopoint_0_coord
+        * taxon_match_failed
+        * dwc_kingdom_suspect
+        * dwc_taxonrank_invalid
+        * dwc_taxonrank_removed
   3. Known localities
     Plants of the World Online provides information about where a species is
     known to occur using TDWG codes.  The occurrence records are intersected
