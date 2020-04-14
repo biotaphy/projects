@@ -8,7 +8,7 @@ alpine climatic regions and montane areas have been limited to certain well-
 studied lineages and areas. Largely due to the fact that such areas are remote
 and often understudied, we know much less about the diversity of life across
 alpine and montane ecosystems as a whole, and how diversity compares within and
-between regions. In this study, we leverage one of the most complete syntheses
+between regions.Â In this study, we leverage one of the most complete syntheses
 of collection information to address specific hypotheses about processes
 generating biodiversity in montane and alpine climatic regions.
 
@@ -57,7 +57,7 @@ Occurrence Data Filters
 Occurrence data is filtered using multiple methods
 
   1. Bounding Box
-    Only occurrence records within the study area are kept (, , , )
+    Only occurrence records within the study area are kept (-180, -56, -34, 90)
   2. Aggregator Flags
     GBIF and iDigBio include flags within the data records indicating potential issues with the data.  Occurrence records that have the following flags are removed.
       a. GBIF
