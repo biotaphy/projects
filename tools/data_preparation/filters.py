@@ -4,7 +4,6 @@ Todo:
     * Handle missing keys (for flags)
 """
 from osgeo import ogr
-# Spatial
 
 # .............................................................................
 def get_bounding_box_filter(x_index, y_index, min_x, min_y, max_x, max_y):
@@ -25,8 +24,8 @@ def get_bounding_box_filter(x_index, y_index, min_x, min_y, max_x, max_y):
     # .......................
     def bounding_box_filter(point):
         """Bounding box filter function."""
-        return (min_x <= point[x_index] <= max_x and
-                min_y <= point[y_index] <= max_y)
+        return (min_x <= point.x <= max_x and
+                min_y <= point.y <= max_y)
     return bounding_box_filter
 
 
@@ -47,7 +46,7 @@ def get_data_flag_filter(flag_field_index, filter_flags):
     # .......................
     def flag_filter(point):
         """Data flag filter function."""
-        test_flags = point[flag_field_index]
+        test_flags = point.flags
         if not isinstance(test_flags, (list, tuple)):
             test_flags = [test_flags]
         return not any([flag in filter_flags for flag in test_flags])
@@ -72,7 +71,7 @@ def get_intersect_geometries_filter(x_index, y_index, geometries):
     def intersect_geometry_filter(point):
         """Intersect geometry filter function."""
         point_geometry = ogr.Geometry(ogr.wkbPoint)
-        point_geometry.AddPoint(point[x_index], point[y_index])
+        point_geometry.AddPoint(point.x, point.y)
         return any([geom.Intersection(point_geometry) for geom in geometries])
     return intersect_geometry_filter
 
@@ -94,7 +93,7 @@ def get_unique_localities_filter(x_index, y_index):
     # .......................
     def unique_localities_filter(point):
         """Unique localities filter function."""
-        test_val = (point[x_index], point[y_index])
+        test_val = (point.x, point.y)
         if test_val in unique_values:
             return False
         unique_values.append(test_val)
