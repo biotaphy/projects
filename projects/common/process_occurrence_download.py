@@ -1,5 +1,9 @@
 """Process a GBIF download and write out species data as separate files."""
 import argparse
+import os
+import sys
+sys.path.append('/home/cjgrady/git/projects/')
+
 from tools.data_preparation.occurrence_transformation import (
     convert_gbif_download, convert_idigbio_download)
 
@@ -13,13 +17,21 @@ def get_species_filename(species_name, base_dir, service_suffix):
         base_dir (str): The base directory to write points.
         service_suffix (str): The service suffix for the data files.
     """
-    temp = species_name.replace('_', ' ')
+    temp = species_name.replace('_', ' ').split(' ')
     genus = temp[0]
     # TODO: Encode file path as necessary
     escaped_species = '{} {}'.format(genus, temp[1])
     genus_dir = os.path.join(base_dir, genus)
     species_filename = os.path.join(
-        genus_dir, '{}{}.csv'.format(escaped_species))
+        genus_dir, '{}{}.csv'.format(escaped_species, service_suffix))
+    #print(species_name)
+    #print(base_dir)
+    #print(service_suffix)
+    #print(temp)
+    #print(genus)
+    #print(escaped_species)
+    #print(genus_dir)
+    #raise Exception('cj')
     if not os.path.exists(genus_dir):
         os.mkdir(genus_dir)
     return species_filename
@@ -41,6 +53,8 @@ def write_points(points, base_dir, service_suffix):
             if out_file:
                 out_file.close()
             current_species = point.species_name
+            #print(point)
+            #print(current_species)
             out_file = open(
                 get_species_filename(
                     current_species, base_dir, service_suffix), 'w')
@@ -66,13 +80,16 @@ def main():
     parser.add_argument(
         'base_dir', type=str, help='The base directory to write data')
     args = parser.parse_args()
+    print('Getting points...')
     if args.provider == 'idigbio':
-        points = []
+        points = convert_idigbio_download(args.filename)
         service_suffix = '_idigbio'
     else:
-        points = []
+        points = convert_gbif_download(args.filename)
         service_suffix = '_gbif'
+    print('Sorting points...')
     points.sort()
+    print('Writing points...')
     write_points(points, args.base_dir, service_suffix)
 
 
