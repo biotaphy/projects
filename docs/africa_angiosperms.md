@@ -1,6 +1,9 @@
 Description
 ===========
 
+Study Area
+==========
+Bounding box - 0,-40, 60, 0
 
 Workflow
 ========
@@ -37,8 +40,12 @@ Workflow
    * SDM Algorithm: Open Source AT&T Maxent
    * PAM grid of half degree cells for study area
    * 10% of PAM cell coverage considered presence
+1. Run experiment using Lifemapper to generate SDMs and PAM
+1. Pull PAM and squidded (connection between PAM labels and tree tips) tree from Lifemapper server
+1. Compute statistics using PAM and Tree
+1. Create GeoJSON from statistics matrix output
+
 
 Results
 =======
 XXXX species after pre-processing occurrence
-After pre-processing occurrences, 
