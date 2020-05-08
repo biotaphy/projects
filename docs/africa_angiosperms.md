@@ -49,3 +49,6 @@ Workflow
 Results
 =======
 XXXX species after pre-processing occurrence
+
+![Alpha Diversity](https://biotaphy.github.io/projects/images/africa_angiosperms_alpha.png)
+![Phylogenetic Diversity](https://biotaphy.github.io/projects/images/africa_angiosperms_pd.png)
