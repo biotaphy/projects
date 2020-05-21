@@ -2,6 +2,9 @@
 import urllib
 import requests
 
+MAX_POINTS = 10000
+LOCAL_LIMIT = 500
+
 # .............................................................................
 def get_gbif_accepted_name(name_str):
     """Get the accepted name for a name string."""
