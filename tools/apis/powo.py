@@ -20,3 +20,13 @@ def get_kew_ids_for_genus(genus_name):
     except Exception as err:
         raise err
 
+
+# .............................................................................
+def get_kew_id_for_species(species_name):
+    """Get ids for kew queries"""
+    results = powo.search(
+        species_name, filters=[Filters.accepted, Filters.species])
+    if results.size() > 0:
+        return [res['fqId'] for res in results][0]
+    return None
+
