@@ -2,6 +2,9 @@
 import urllib
 import requests
 
+MAX_POINTS = 10000
+LOCAL_LIMIT = 500
+
 # .............................................................................
 def get_points_from_idigbio(species_key=None, genus_key=None,
                             max_points=MAX_POINTS):
