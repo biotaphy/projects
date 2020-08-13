@@ -16,11 +16,10 @@ def get_polygon_coordinates(x, y, x_res, y_res):
 
 # .............................................................................
 def main():
-    tree_mtx_fn = 'C:/Users/cj/Desktop/ryan_v3/tree_mtx.lmm'
-    out_geojson_fn = 'C:/Users/cj/Desktop/ryan_v3/tree_geo.json'
+    tree_mtx_fn = '/DATA/biotaphy/outputs_next/tree_stats_china.lmm'
+    out_geojson_fn = '/DATA/biotaphy/outputs_next/china_v2.json'
     # Read matrix
-    with open(tree_mtx_fn, 'rb') as in_file:
-        tree_mtx = Matrix.load_flo(in_file)
+    tree_mtx = np.nan_to_num(Matrix.load(tree_mtx_fn))
 
     stats = tree_mtx.get_column_headers()
     row_headers = tree_mtx.get_row_headers()
@@ -37,7 +36,7 @@ def main():
             if not np.isclose(tree_mtx[idx].max(), 0.0):
                 # Write feature
                 id_, x, y = row_headers[idx]
-                coords = get_polygon_coordinates(x, y, .25, .25)
+                coords = get_polygon_coordinates(float(x), float(y), .25, .25)
                 out_file.write("""\
         {
             "type": "Feature",
@@ -55,7 +54,7 @@ def main():
 """)
                 tmp = []
                 for i, stat_name in enumerate(stats):
-                    tmp.append('                "{}": {}'.format(
+                    tmp.append('                "{}": {:.5f}'.format(
                         stat_name, tree_mtx[idx, i]))
                 out_file.write(',\n'.join(tmp))
                 out_file.write("""\

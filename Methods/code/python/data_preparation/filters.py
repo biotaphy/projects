@@ -5,7 +5,7 @@ Todo:
 """
 import os
 from osgeo import ogr
-
+from .spatial_index import SpatialIndex
 
 WGSRPD_BASE_DIR = '/home/cjgrady/git/wgsrpd'
 
@@ -105,7 +105,7 @@ def get_unique_localities_filter():
 
 
 # .............................................................................
-def get_tdwg_locality_filter(locality_dicts_list):
+def get_tdwg_locality_filter_old(locality_dicts_list):
     """Get a filter function that only allows points within the localities.
 
     Args:
@@ -135,6 +135,49 @@ def get_tdwg_locality_filter(locality_dicts_list):
         geometries.extend(
             get_geometry_for_tdwg_feature(tdwg_level, tdwg_code, feat_id))
     return get_intersect_geometries_filter(geometries)
+
+
+# .............................................................................
+def get_tdwg_locality_filter(locality_dicts_list):
+    """Get a filter function that only allows points within the localities.
+
+    Args:
+        locality_dicts_list (list of dict): A list of dictionaries representing
+            TDWG localities.
+
+    Returns:
+        function - A function that takes a point as input and returns a boolean
+            output indicating if the point is valid according to this filter.
+
+    Example dictionary:
+        {
+            "establishment": "Native",
+            "featureId": "127",
+            "tdwgCode": "GUY",
+            "tdwgLevel": 3,
+            "name": "Guyana"
+        }
+
+    """
+    # Get geometries
+    geometries = []
+    for locality_dict in locality_dicts_list:
+        tdwg_code = locality_dict['tdwgCode']
+        tdwg_level = locality_dict['tdwgLevel']
+        feat_id = locality_dict['featureId']
+        geometries.extend(
+            get_geometry_for_tdwg_feature(tdwg_level, tdwg_code, feat_id))
+    return get_spatial_index_filter(geometries)
+
+
+# .............................................................................
+def get_spatial_index_filter(geometries):
+    spatial_index = SpatialIndex()
+    for i, geom in enumerate(geometries):
+        spatial_index.add_feature(i, geom, i)
+    def spatial_index_filter(point):
+        return bool(spatial_index.search(point.x, point.y))
+    return spatial_index_filter
 
 
 # .............................................................................
