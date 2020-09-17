@@ -25,7 +25,7 @@ def get_all_combos(character_set, num_left):
 # .............................................................................
 def main():
     """Main method for script."""
-     parser = argparse.ArgumentParser()
+    parser = argparse.ArgumentParser()
     parser.add_argument(
         '-f', '--filter_config', type=argparse.FileType('r'), action='append',
         help='Data wrangler configuration filename.')
