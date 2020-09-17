@@ -2,9 +2,9 @@
 import argparse
 import json
 
-from lmpy import PointCsvReader, PointCsvWriter
+from lmpy.point import PointCsvReader, PointCsvWriter
 from lmpy.data_preparation.occurrence_transformation import split_points
-from lmpy.data_wranglers.occurrence.factory import wrangler_factory
+from lmpy.data_wrangling.occurrence.factory import wrangler_factory
 
 
 CHARACTER_SET = list('abcdefghijklmnopqrstuvwxyz')
@@ -37,7 +37,7 @@ def main():
     parser.add_argument('group_position', type=int)
     parser.add_argument('group_attribute', type=str)
     parser.add_argument(
-        'in_filename', type=str, action='append',
+        'in_filename', type=str, nargs='+',
         help='Input CSV file location')
     args = parser.parse_args()
 
@@ -47,10 +47,12 @@ def main():
         point_reader = PointCsvReader(
             filename, args.species_field, args.x_field, args.y_field)
         point_reader.open()
-        readers.append(reader)
+        readers.append(point_reader)
 
     # Load data wranglers
-    wranglers = [wrangler_factory(json.load(args.filter_config))]
+    wranglers = []
+    if args.filter_config:
+        wranglers = [wrangler_factory(json.load(config)) for config in args.filter_config]
 
     writers = {}
     for combo in get_all_combos(CHARACTER_SET, args.group_size):
@@ -59,7 +61,7 @@ def main():
             out_filename, ['species_name', 'x', 'y'])
         writers[combo].open()
     # Split the occurrence data files
-    split_occurrences(
+    split_points(
         readers, writers, args.group_attribute, args.group_size,
         args.group_position, wranglers=wranglers)
     for writer in writers.values():

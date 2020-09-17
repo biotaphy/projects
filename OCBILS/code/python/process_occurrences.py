@@ -37,7 +37,9 @@ def main():
         readers.append(point_reader)
 
     # Load data wranglers
-    wranglers = [wrangler_factory(json.load(config)) for config in args.filter_config]
+    wranglers = []
+    if args.filter_config:
+        wranglers = [wrangler_factory(json.load(config)) for config in args.filter_config]
 
     # Open point writer
     with PointCsvWriter(args.out_filename, ['species_name', 'x', 'y']
