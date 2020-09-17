@@ -1,31 +1,19 @@
-"""Split occurrence records based on a field"""
+"""Process occurrence data.
+
+Multiple input files -> one output file
+"""
 import argparse
 import json
 
 from lmpy import PointCsvReader, PointCsvWriter
-from lmpy.data_preparation.occurrence_transformation import split_points
+from lmpy.data_preparation.occurrence_transformation import wrangle_points
 from lmpy.data_wranglers.occurrence.factory import wrangler_factory
-
-
-CHARACTER_SET = list('abcdefghijklmnopqrstuvwxyz')
-
-
-# .............................................................................
-def get_all_combos(character_set, num_left):
-    """Recurse to get all combinations of characters."""
-    if num_left <= 1:
-        return character_set
-    all_combinations = []
-    for char in character_set:
-        for combo in get_all_combos(character_set, num_left - 1):
-            all_combinations.append('{}{}'.format(char, combo))
-    return all_combinations
 
 
 # .............................................................................
 def main():
     """Main method for script."""
-     parser = argparse.ArgumentParser()
+    parser = argparse.ArgumentParser()
     parser.add_argument(
         '-f', '--filter_config', type=argparse.FileType('r'), action='append',
         help='Data wrangler configuration filename.')
@@ -33,9 +21,6 @@ def main():
     parser.add_argument('species_field', type=str, help='Field in CSV for species name')
     parser.add_argument('x_field', type=str, help='Field in CSV for X coordinate')
     parser.add_argument('y_field', type=str, help='Field in CSV for Y coordinate')
-    parser.add_argument('group_size', type=int)
-    parser.add_argument('group_position', type=int)
-    parser.add_argument('group_attribute', type=str)
     parser.add_argument(
         'in_filename', type=str, action='append',
         help='Input CSV file location')
@@ -52,26 +37,15 @@ def main():
     # Load data wranglers
     wranglers = [wrangler_factory(json.load(args.filter_config))]
 
-    writers = {}
-    for combo in get_all_combos(CHARACTER_SET, args.group_size):
-        out_filename = '{}{}.csv'.format(args.base_out_filename, combo)
-        writers[combo] = PointCsvWriter(
-            out_filename, ['species_name', 'x', 'y'])
-        writers[combo].open()
-    # Split the occurrence data files
-    split_occurrences(
-        readers, writers, args.group_attribute, args.group_size,
-        args.group_position, wranglers=wranglers)
-    for writer in writers.values():
-        writer.close()
+    # Open point writer
+    with PointCsvWriter(args.out_filename, ['species_name', 'x', 'y']
+            ) as writer:
+        # Wrangle points
+        wrangle_points(readers, writer, wranglers=wranglers)
 
     # Close readers
     for point_reader in readers:
         point_reader.close()
-
-
-
-
 
 
 # .............................................................................
