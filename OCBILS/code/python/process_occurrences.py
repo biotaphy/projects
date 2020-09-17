@@ -17,6 +17,7 @@ def main():
     parser.add_argument(
         '-f', '--filter_config', type=argparse.FileType('r'), action='append',
         help='Data wrangler configuration filename.')
+    parser.add_argument('-g', '--geopoint', type=str, help='Field in CSV for Geopoint')
     parser.add_argument('out_filename', type=str, help='Output file location')
     parser.add_argument('species_field', type=str, help='Field in CSV for species name')
     parser.add_argument('x_field', type=str, help='Field in CSV for X coordinate')
@@ -30,7 +31,8 @@ def main():
     readers = []
     for filename in args.in_filename:
         point_reader = PointCsvReader(
-            filename, args.species_field, args.x_field, args.y_field)
+            filename, args.species_field, args.x_field, args.y_field,
+            geopoint=args.geopoint)
         point_reader.open()
         readers.append(point_reader)
 
