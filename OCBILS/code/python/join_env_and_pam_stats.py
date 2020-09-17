@@ -95,6 +95,9 @@ def main():
     """Main method for script."""
     parser = argparse.ArgumentParser()
     parser.add_argument(
+        '--out_stats_matrix_filename', type=str,
+        help='Location to write statistics matrix.')
+    parser.add_argument(
         'shapegrid_filename', type=str,
         help='File location of the shapegrid shapefile')
     parser.add_argument(
@@ -109,6 +112,12 @@ def main():
         'out_geojson_filename', type=str,
         help='File location to write the output GeoJSON')
     parser.add_argument(
+        'out_csv_filename', type=str,
+        help='File location to write the output CSV')
+    parser.add_argument(
+        'out_matrix_filename', type=str,
+        help='File location to write the output matrix')
+    parser.add_argument(
         '--layer', nargs=2, action='append',
         help='File location of a layer followed by a label')
     args = parser.parse_args()
@@ -122,7 +131,8 @@ def main():
         args.shapegrid_filename, args.layer)
     # Calculate PAM statistics
     stats_mtx = calculate_tree_site_statistics(pam, tree)
-    stats_mtx.write('/home/cjgrady/stats_test.lmm')
+    if args.out_stats_matrix_filename:
+        stats_mtx.write(args.out_stats_matrix_filename)
     # Join encoded layers and PAM statistics
     mtx = join_encoded_layers_and_pam_stats(encoded_layers, stats_mtx)
     # Generate GeoJSON
@@ -143,10 +153,9 @@ def main():
             '"POLYGON (({} {},{} {},{} {},{} {},{} {}))"'.format(
                 min_x, max_y, max_x, max_y, max_x, min_y, min_x, min_y, min_x,
                 max_y))
-    mtx.write('/home/cjgrady/africa_v8.lmm')
+    mtx.write(args.out_matrix_filename)
     mtx.set_row_headers(new_rh)
-    mtx.get_row_headers()
-    with open('/home/cjgrady/africa_v8.csv', 'w') as out_file:
+    with open(args.out_csv_filename, 'w') as out_file:
         mtx.write_csv(out_file)
 
 
