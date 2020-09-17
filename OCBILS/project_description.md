@@ -57,32 +57,32 @@ Python requirements:
 5. Process GBIF and iDigBio data through filters to fill in accepted taxon name, remove problem data flags, and convert to a common format (process_occurrences.py)
   ```
   $ export WRANGLER_CONFIG_DIR=configuration/data_wranglers
-  $ process_occurrences.py -f $WRANGLER_CONFIG_DIR/decimal_precision_filter.json -f $WRANGLER_CONFIG_DIR/gbif_flag_filter.json -f $WRANGLER_CONFIG_DIR/accepted_taxon_filter.json -f $WRANGLER_CONFIG_DIR/gbif_to_common_map_modifier.json gbif_processed.csv species decimalLongitude decimalLatitude gbif.csv
-  $ process_occurrences.py -f $WRANGLER_CONFIG_DIR/decimal_precision_filter.json -f $WRANGLER_CONFIG_DIR/idigbio_flag_filter.json -f $WRANGLER_CONFIG_DIR/accepted_taxon_filter.json -f $WRANGLER_CONFIG_DIR/idigbio_to_common_map_modifier.json -g idigbio_processed.csv species lon lat idigbio.csv
+  $ python process_occurrences.py -f $WRANGLER_CONFIG_DIR/decimal_precision_filter.json -f $WRANGLER_CONFIG_DIR/gbif_flag_filter.json -f $WRANGLER_CONFIG_DIR/accepted_taxon_filter.json -f $WRANGLER_CONFIG_DIR/gbif_to_common_map_modifier.json gbif_processed.csv species decimalLongitude decimalLatitude gbif.csv
+  $ python process_occurrences.py -f $WRANGLER_CONFIG_DIR/decimal_precision_filter.json -f $WRANGLER_CONFIG_DIR/idigbio_flag_filter.json -f $WRANGLER_CONFIG_DIR/accepted_taxon_filter.json -f $WRANGLER_CONFIG_DIR/idigbio_to_common_map_modifier.json -g idigbio_processed.csv species lon lat idigbio.csv
   ```
 6. Split processed files into easier to manage chunks (split_occurrences.py)
   ```
-  $ split_occurrences.py chunks/occurrences_ species x y 2 0 species gbif.csv idigbio.csv
+  $ python split_occurrences.py chunks/occurrences_ species x y 2 0 species gbif.csv idigbio.csv
   ```
 7. Sort chunks (sort_occurrences.py)
   ```
-  $ sort_occurrences.py chunks/occurrences_aa.csv sorted/occurrences_aa.csv species x y
-  $ sort_occurrences.py chunks/occurrences_ab.csv sorted/occurrences_ab.csv species x y
+  $ python sort_occurrences.py chunks/occurrences_aa.csv sorted/occurrences_aa.csv species x y
+  $ python sort_occurrences.py chunks/occurrences_ab.csv sorted/occurrences_ab.csv species x y
   ...
-  $ sort_occurrences.py chunks/occurrences_zz.csv sorted/occurrences_zz.csv species x y  
+  $ python sort_occurrences.py chunks/occurrences_zz.csv sorted/occurrences_zz.csv species x y  
   ```
 8. Process sorted chunks into one large file and filter duplicate localities, filter with KEW expert opinion localities, and minimum number of points (process_occurrences.py)
   ```
-  $ process_occurrences.py -f $WRANGLER_CONFIG_DIR/duplicate_locality_filter.json -f $WRANGLER_CONFIG_DIR/kew_locality_filter.json -f $WRANGLER_CONFIG_DIR/minimum_points_filter.json processed_occurrences.csv species x y sorted/occurrences_aa.csv sorted/occurrences_ab.csv ... sorted/occurrences_zz.csv
+  $ python process_occurrences.py -f $WRANGLER_CONFIG_DIR/duplicate_locality_filter.json -f $WRANGLER_CONFIG_DIR/kew_locality_filter.json -f $WRANGLER_CONFIG_DIR/minimum_points_filter.json processed_occurrences.csv species x y sorted/occurrences_aa.csv sorted/occurrences_ab.csv ... sorted/occurrences_zz.csv
   ```
 9. For each region, process larger occurrence file into regional subset and filter out species without enough points (process_occurrences.py)
   ```
-  $ process_occurrences.py -f $WRANGLER_CONFIG_DIR/africa_bbox_filter.json -f $WRANGLER_CONFIG_DIR/minimum_points_filter.json africa_occurrences.csv species x y processed_occurrences.csv
-  $ process_occurrences.py -f $WRANGLER_CONFIG_DIR/australia_bbox_filter.json -f $WRANGLER_CONFIG_DIR/minimum_points_filter.json australia_occurrences.csv species x y processed_occurrences.csv
-  $ process_occurrences.py -f $WRANGLER_CONFIG_DIR/south_america_bbox_filter.json -f $WRANGLER_CONFIG_DIR/minimum_points_filter.json south_america_occurrences.csv species x y processed_occurrences.csv
+  $ python process_occurrences.py -f $WRANGLER_CONFIG_DIR/africa_bbox_filter.json -f $WRANGLER_CONFIG_DIR/minimum_points_filter.json africa_occurrences.csv species x y processed_occurrences.csv
+  $ python process_occurrences.py -f $WRANGLER_CONFIG_DIR/australia_bbox_filter.json -f $WRANGLER_CONFIG_DIR/minimum_points_filter.json australia_occurrences.csv species x y processed_occurrences.csv
+  $ python process_occurrences.py -f $WRANGLER_CONFIG_DIR/south_america_bbox_filter.json -f $WRANGLER_CONFIG_DIR/minimum_points_filter.json south_america_occurrences.csv species x y processed_occurrences.csv
   ```
 10. POST using Lifemapper / Biotaphy web UI (http://client.lifemapper.org/biotpahy/)
 11. Calculate PAM stats, encode environment layers and create GeoJSON (join_env_and_pam_stats.py)
   ```
-  $ join_env_and_pam_stats.py 
+  $ python join_env_and_pam_stats.py shpgrid_africa.shp africa_pam.lmm tree.nex nexus africa.geojson --layer layers/BIOCLIM_12.tif Bioclim_12 --layer layers/BIOCLIM_17.tif Bioclim_17 --layer layers/BIOCLIM_1.tif Bioclim_1 --layer layers/BIOCLIM_7.tif Bioclim_7 --layer layers/CFR_Cowling2008_wgs84_2.5minute.tif CFR_Cowling --layer layers/GTOPO30_SLOPE_reduced.tif Slope --layer layers/GTOPO30_ELEVATION.tif Elevation --layer layers/ISRICSOILGRIDS_new_average_coarsefragmentpercent_reduced.tif Coarse_fragment --layer layers/ISRICSOILGRIDS_new_average_phx10percent_reduced.tif Ph_x_10 --layer layers/ISRICSOILGRIDS_new_average_sandpercent_reduced.tif Sand --layer layers/ISRICSOILGRIDS_new_average_soilorganiccarboncontent_reduced.tif Organic_content --layer layers/LandCover_1_Needleleaf.tif Needleleaf --layer layers/LandCover_6_Herbaceous.tif Herbaeous --layer layers/climate_distance_pairwiseavg_10m.precip.tif precip_distance --layer layers/climate_distance_pairwiseavg_10m.temp.tif temp_distance
   ```
