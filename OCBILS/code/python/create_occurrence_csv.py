@@ -157,6 +157,7 @@ def get_gbif_points(base_dir, species):
                                                       ).replace(';', ','))))
                 except Exception as err:
                     print(err)
+                    raise err
         return points
     return []
 
@@ -232,7 +233,7 @@ def get_idigbio_points(base_dir, species):
 
 
 # .............................................................................
-def get_kew_filter(base_dir, species):
+def get_kew_filter(base_dir, species, wgsrpd_dir):
     """Get a filter for KEW POWO expert opinion"""
     fn = _get_filename(base_dir, species, '_powo.json')
     if os.path.exists(fn):
@@ -243,7 +244,8 @@ def get_kew_filter(base_dir, species):
                     species_info['distribution']['natives'],
                     wgsrpd_dir=wgsrpd_dir)
             except Exception as err:
-                pass
+                print(err)
+                
     return None
 
 
