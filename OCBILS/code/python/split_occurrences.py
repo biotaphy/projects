@@ -29,7 +29,7 @@ def main():
     parser.add_argument(
         '-f', '--filter_config', type=argparse.FileType('r'), action='append',
         help='Data wrangler configuration filename.')
-    parser.add_argument('out_filename', type=str, help='Output file location')
+    parser.add_argument('base_out_filename', type=str, help='Output file location')
     parser.add_argument('species_field', type=str, help='Field in CSV for species name')
     parser.add_argument('x_field', type=str, help='Field in CSV for X coordinate')
     parser.add_argument('y_field', type=str, help='Field in CSV for Y coordinate')
