@@ -5,9 +5,9 @@ Multiple input files -> one output file
 import argparse
 import json
 
-from lmpy import PointCsvReader, PointCsvWriter
+from lmpy.point import PointCsvReader, PointCsvWriter
 from lmpy.data_preparation.occurrence_transformation import wrangle_points
-from lmpy.data_wranglers.occurrence.factory import wrangler_factory
+from lmpy.data_wrangling.occurrence.factory import wrangler_factory
 
 
 # .............................................................................
@@ -32,10 +32,10 @@ def main():
         point_reader = PointCsvReader(
             filename, args.species_field, args.x_field, args.y_field)
         point_reader.open()
-        readers.append(reader)
+        readers.append(point_reader)
 
     # Load data wranglers
-    wranglers = [wrangler_factory(json.load(args.filter_config))]
+    wranglers = [wrangler_factory(json.load(config)) for config in args.filter_config]
 
     # Open point writer
     with PointCsvWriter(args.out_filename, ['species_name', 'x', 'y']
