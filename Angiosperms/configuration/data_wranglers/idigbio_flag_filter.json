@@ -1,0 +1,23 @@
+{
+    "wrangler_type": "attribute_filter",
+    "attribute_name": "idigbio:flags",
+    "field_delimiter": ",",
+    "field_type": "list",
+    "condition": {
+        "all": {
+            "not_in": [
+                "geopoint_datum_missing",
+                "geopoint_bounds",
+                "geopoint_datum_error",
+                "geopoint_similar_coord",
+                "rev_geocode_mismatch",
+                "rev_geocode_failure",
+                "geopoint_0_coord",
+                "taxon_match_failed",
+                "dwc_kingdom_suspect",
+                "dwc_taxonrank_invalid",
+                "dwc_taxonrank_removed"
+            ]
+        }
+    }
+}

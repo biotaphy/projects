@@ -5,9 +5,9 @@ Sort a single file based on a group field
 import argparse
 import json
 
-from lmpy import PointCsvReader, PointCsvWriter
+from lmpy.point import PointCsvReader, PointCsvWriter
 from lmpy.data_preparation.occurrence_transformation import sort_points
-from lmpy.data_wranglers.occurrence.factory import wrangler_factory
+from lmpy.data_wrangling.occurrence.factory import wrangler_factory
 
 
 # .............................................................................
@@ -29,17 +29,19 @@ def main():
     args = parser.parse_args()
 
     # Load data wranglers
-    wranglers = [wrangler_factory(json.load(args.filter_config))]
+    wranglers = []
+    if args.filter_config:
+        wranglers = [wrangler_factory(json.load(config)) for config in args.filter_config]
 
     # Initialize point reader
     with PointCsvReader(
-            filename, args.species_field, args.x_field, args.y_field
+            args.in_filename, args.species_field, args.x_field, args.y_field
             ) as reader:
         # Open point writer
         with PointCsvWriter(args.out_filename, ['species_name', 'x', 'y']
                 ) as writer:
             # Sort points
-            sort_points(readers, writer, wranglers=wranglers)
+            sort_points(reader, writer, wranglers=wranglers)
 
 
 # .............................................................................
