@@ -12,7 +12,7 @@ Python requirements:
  - lmpy - https://github.com/lifemapper/lmpy
  - BiotaphyPy - https://github.com/biotaphy/BiotaphyPy
 
-1. Acquire study tree (Smith and Brown 2008)
+1. Acquire study tree (Smith and Brown 2018)
 2. Get accepted taxa names for the tips in the tree (get_accepted_names_for_tree.py)
 3. Download data from iDigBio and GBIF
  - iDigBio: https://api.idigbio.org/v2/download/?rq={%22scientificname%22:%20{%22type%22:%20%22exists%22},%22kingdom%22:%20%22Plantae%22,%20%22geopoint%22:%20{%22type%22:%20%22exists%22}}&email={fill in email}
