@@ -16,6 +16,12 @@ strong, overlap with old communities.
 
 ----
 
+Citation
+========
+
+De Souza Cortez, M. B., Folk, R. A., Grady, C. J., Spoelhof, J. P., Smith, S. A., Soltis, D. E., & Soltis, P. S. (2020). Is the age of plant communities predicted by the age, stability and soil composition of the underlying landscapes? An investigation of OCBILs. Biological Journal of the Linnean Society.
+
+----
 
 Data Processing
 ===============
