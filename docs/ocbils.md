@@ -28,7 +28,7 @@ Python requirements:
 1. Acquire study tree (Smith and Brown 2018)
 2. Get accepted taxa names for the tips in the tree (get_accepted_names_for_tree.py)
 3. Download data from iDigBio and GBIF
- - iDigBio: https://api.idigbio.org/v2/download/?rq={%22scientificname%22:%20{%22type%22:%20%22exists%22},%22kingdom%22:%20%22Plantae%22,%20%22geopoint%22:%20{%22type%22:%20%22exists%22}}&email={fill in email}
+ - iDigBio: https://api.idigbio.org/v2/download/?rq={"scientificname": {"type": "exists"},"kingdom": "Plantae", "geopoint": {"type": "exists"}}&email={fill in email}
  - GBIF (HTTP POST): https://api.gbif.org/v1/occurrence/download/request
    - POST data
 ```
