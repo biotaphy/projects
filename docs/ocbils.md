@@ -1,17 +1,18 @@
 Summary of Ocbils project
 =========================
-Old, climatically buffered, infertile landscapes (Ocbils) have been hypothesized to harbor an elevated number of persistent plant 
-lineages and are predicted to occur across different parts of the globe, interspersed with other types of landscapes.  We tested 
-whether the mean age of a plant community is associated with occurrence on Ocbils, as predicted by climatic stability and poor 
-soil environments. Using digitized occurrence data for seed plants occurring in Australia (15,029 species), sub-Saharanouthern 
-Africa (16,802 species), and South America (31,313 species), regions that comprise commonly investigated Ocbils (Southwestern 
-Australian Floristic Region, Greater Cape Floristic Region, and campos rupestres), and phylogenies pruned to match the species 
-occurrences, we tested for associations between environmental data (current-day climate, soil composition, elevation, and climatic 
-stability) and two novel metrics developed here that capture the age of a community (Mean Tip Length and Mean Node Height). Our 
-results indicate that plant community ages are influenced by a combination of multiple environmental predictors that vary 
-globally; we did not find statistically strong associations between the environments of Ocbil areas and community age, in contrast 
-to the prediction for these landscapes. The Cape Floristic Region was the only Ocbil that showeding a significant, although not 
-strong, overlap with old communities.  
+Old, climatically buffered, infertile landscapes (OCBILs) have been hypothesized to harbour an elevated number of
+persistent plant lineages and are predicted to occur across different parts of the globe, interspersed with other types
+of landscapes. We tested whether the mean age of a plant community is associated with occurrence on OCBILs, as
+predicted by climatic stability and poor soil environments. Using digitized occurrence data for seed plants occurring
+in Australia (7033 species), sub-Saharan Africa (3990 species) and South America (44 482 species), regions that
+comprise commonly investigated OCBILs (Southwestern Australian Floristic Region, Greater Cape Floristic Region
+and campos rupestres), and phylogenies pruned to match the species occurrences, we tested for associations between
+environmental data (current climate, soil composition, elevation and climatic stability) and two novel metrics
+developed here that capture the age of a community (mean tip length and mean node height). Our results indicate
+that plant community ages are influenced by a combination of multiple environmental predictors that vary globally;
+we did not find statistically strong associations between the environments of OCBIL areas and community age,
+in contrast to the prediction for these landscapes. The Cape Floristic Region was the only OCBIL that showed a
+significant, although not strong, overlap with old communities.  
 
 
 ----
@@ -19,7 +20,7 @@ strong, overlap with old communities.
 Citation
 ========
 
-De Souza Cortez, M. B., Folk, R. A., Grady, C. J., Spoelhof, J. P., Smith, S. A., Soltis, D. E., & Soltis, P. S. (2020). Is the age of plant communities predicted by the age, stability and soil composition of the underlying landscapes? An investigation of OCBILs. Biological Journal of the Linnean Society.
+De Souza Cortez, M. B., Folk, R. A., Grady, C. J., Spoelhof, J. P., Smith, S. A., Soltis, D. E., & Soltis, P. S. (2020). Is the age of plant communities predicted by the age, stability and soil composition of the underlying landscapes? An investigation of OCBILs. Biological Journal of the Linnean Society. https://doi.org/10.1093/biolinnean/blaa174
 
 ----
 
