@@ -1,8 +1,28 @@
 Summary of Ocbils project
+=========================
+Old, climatically buffered, infertile landscapes (OCBILs) have been hypothesized to harbour an elevated number of
+persistent plant lineages and are predicted to occur across different parts of the globe, interspersed with other types
+of landscapes. We tested whether the mean age of a plant community is associated with occurrence on OCBILs, as
+predicted by climatic stability and poor soil environments. Using digitized occurrence data for seed plants occurring
+in Australia (7033 species), sub-Saharan Africa (3990 species) and South America (44 482 species), regions that
+comprise commonly investigated OCBILs (Southwestern Australian Floristic Region, Greater Cape Floristic Region
+and campos rupestres), and phylogenies pruned to match the species occurrences, we tested for associations between
+environmental data (current climate, soil composition, elevation and climatic stability) and two novel metrics
+developed here that capture the age of a community (mean tip length and mean node height). Our results indicate
+that plant community ages are influenced by a combination of multiple environmental predictors that vary globally;
+we did not find statistically strong associations between the environments of OCBIL areas and community age,
+in contrast to the prediction for these landscapes. The Cape Floristic Region was the only OCBIL that showed a
+significant, although not strong, overlap with old communities.  
 
 
 ----
 
+Citation
+========
+
+De Souza Cortez, M. B., Folk, R. A., Grady, C. J., Spoelhof, J. P., Smith, S. A., Soltis, D. E., & Soltis, P. S. (2020). Is the age of plant communities predicted by the age, stability and soil composition of the underlying landscapes? An investigation of OCBILs. Biological Journal of the Linnean Society. https://doi.org/10.1093/biolinnean/blaa174
+
+----
 
 Data Processing
 ===============
@@ -15,7 +35,7 @@ Python requirements:
 1. Acquire study tree (Smith and Brown 2018)
 2. Get accepted taxa names for the tips in the tree (get_accepted_names_for_tree.py)
 3. Download data from iDigBio and GBIF
- - iDigBio: https://api.idigbio.org/v2/download/?rq={%22scientificname%22:%20{%22type%22:%20%22exists%22},%22kingdom%22:%20%22Plantae%22,%20%22geopoint%22:%20{%22type%22:%20%22exists%22}}&email={fill in email}
+ - iDigBio: https://api.idigbio.org/v2/download/?rq={"scientificname": {"type": "exists"},"kingdom": "Plantae", "geopoint": {"type": "exists"}}&email={fill in email}
  - GBIF (HTTP POST): https://api.gbif.org/v1/occurrence/download/request
    - POST data
 ```
@@ -85,4 +105,9 @@ Python requirements:
 11. Calculate PAM stats, encode environment layers and create GeoJSON (join_env_and_pam_stats.py)
   ```
   $ python join_env_and_pam_stats.py shpgrid_africa.shp africa_pam.lmm tree.nex nexus africa.geojson --layer layers/BIOCLIM_12.tif Bioclim_12 --layer layers/BIOCLIM_17.tif Bioclim_17 --layer layers/BIOCLIM_1.tif Bioclim_1 --layer layers/BIOCLIM_7.tif Bioclim_7 --layer layers/CFR_Cowling2008_wgs84_2.5minute.tif CFR_Cowling --layer layers/GTOPO30_SLOPE_reduced.tif Slope --layer layers/GTOPO30_ELEVATION.tif Elevation --layer layers/ISRICSOILGRIDS_new_average_coarsefragmentpercent_reduced.tif Coarse_fragment --layer layers/ISRICSOILGRIDS_new_average_phx10percent_reduced.tif Ph_x_10 --layer layers/ISRICSOILGRIDS_new_average_sandpercent_reduced.tif Sand --layer layers/ISRICSOILGRIDS_new_average_soilorganiccarboncontent_reduced.tif Organic_content --layer layers/LandCover_1_Needleleaf.tif Needleleaf --layer layers/LandCover_6_Herbaceous.tif Herbaeous --layer layers/climate_distance_pairwiseavg_10m.precip.tif precip_distance --layer layers/climate_distance_pairwiseavg_10m.temp.tif temp_distance
-  ```
+```
+12. Load the GeoJSON file in R to perform linear regressions (univariate and multiple) using the environmental variables as predictors and community age metrics as the response variables. R scripts are available at https://github.com/biotaphy/projects/tree/master/OCBILS/code/cran-r/R_scripts.
+
+Please, see diagrams below to better understand steps 1-10
+![image](https://user-images.githubusercontent.com/32682615/102527512-33393e80-406b-11eb-95a1-bdf5006209fe.png)
+![image](https://user-images.githubusercontent.com/32682615/102528014-f457b880-406b-11eb-8374-c652761b0575.png)
